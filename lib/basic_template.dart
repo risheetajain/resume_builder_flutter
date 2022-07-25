@@ -11,55 +11,108 @@ class _BasicTemplateState extends State<BasicTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Center(
-            child: Text('Basic Template'),
-          ),
-          Row(
-            children: [
-              CircleAvatar(
-                  child: Image.network("https://picsum.photos/250?image=9")),
-              const SizedBox(width: 10),
-              Column(
-                children: const [
-                  Text('Name'),
-                  Text("Position"),
-                  Text("Description")
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.mail),
-                      SizedBox(width: 10),
-                      Text("Email")
-                    ],
-                  ),
-                  Row(
-                    children: const [
-                      Icon(Icons.phone),
-                      SizedBox(width: 10),
-                      Text("Phone")
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                  flex: 2,
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          children: [
+            const Center(
+              child: Text('Basic Template'),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: CircleAvatar(
+                      child: Image.network(
+                    "https://picsum.photos/250?image=9",
+                    fit: BoxFit.cover,
+                    height: 250,
+                    width: 250,
+                  )),
+                ),
+                Expanded(
+                  flex: 3,
                   child: Column(
                     children: const [
-                      Text("Skills"),
+                      Text(
+                        'Name',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "Position",
+                      ),
+                      Text("Description")
                     ],
-                  ))
-            ],
-          )
-        ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(Icons.mail),
+                          SizedBox(width: 10),
+                          Text("Email")
+                        ],
+                      ),
+                      Row(
+                        children: const [
+                          Icon(Icons.phone),
+                          SizedBox(width: 10),
+                          Text("Phone")
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Table(
+              children: [
+                TableRow(children: [
+                  Column(
+                    children: [
+                      const Text("Skills"),
+                      SizedBox(
+                        height: 100,
+                        child: ReorderableListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Text(
+                              "$index",
+                              key: Key("$index"),
+                            );
+                          },
+                          onReorder: (int oldIndex, int newIndex) {},
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text("Educations"),
+                      ListView(
+                          shrinkWrap: true,
+                          children: List.generate(
+                            1,
+                            ((index) => Column(
+                                  children: const [
+                                    Text("College"),
+                                    Text("Degree"),
+                                    Text("Description"),
+                                  ],
+                                )),
+                          ))
+                    ],
+                  )
+                ]),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
